@@ -1,0 +1,36 @@
+{
+  "name": "pietron",
+  "version": "1.0.0",
+  "description": "Cross-platform IDE for Piet.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron src/main.js",
+    "packosx": "electron-packager . Pietron --out=release --overwrite --platform=darwin --icon=src/images/Pietron.icns",
+    "packwin": "electron-packager . Pietron --out=release --overwrite --platform=win32 --icon=src/images/Pietron.ico",
+    "packlinux": "electron-packager . Pietron --out=release --overwrite --platform=linux --icon=src/images/Pietron.png"
+  },
+  "keywords": [
+    "pietron",
+    "electron",
+    "piet",
+    "editor",
+    "debugger",
+    "interpreter",
+    "ide"
+  ],
+  "author": {
+    "email": "dnek.app@gmail.com",
+    "name": "dnek",
+    "url": "http://dnek.cf"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.8.3",
+    "electron-packager": "^11.1.0",
+    "eslint": "^4.18.2",
+    "npm": "^5.7.1"
+  },
+  "dependencies": {
+    "jimp": "^0.2.28"
+  }
+}

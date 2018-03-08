@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI","Noto Sans Japanese","ヒラギノ角ゴ ProN W3", Meiryo, sans-serif;
+  /* font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace; */
+  font-size: 1.4em;
+}
+
+.monospace {
+  /* padding: 4px; */
+  font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+  /* user-select: text; */
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#content {
+  padding: 4px;
+  position: relative;
+  min-height: 1px;
+  flex-grow: 1;
+  display: flex;
+  background-color: #eee;
+}
+
+#toolPane {
+  padding: 4px;
+  flex-shrink: 0;
+  min-width: 1px;
+  height: 100%;
+}
+
+#paletteView {
+  position: relative;
+}
+
+#paletteTable {
+  border: 2px solid gray;
+  cursor: pointer;
+}
+
+#paletteTable td {
+  padding: 2px;
+  min-width: 68px;
+  height: 68px;
+  border: 1px solid gray;
+  color: #000;
+  text-align: center;
+  text-shadow: 0 0 10px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  /* -webkit-text-stroke: 1px #000; */
+  /* font-size: 1.05rem; */
+  font-weight: 600;
+}
+
+#paletteTable td .palette-command{
+  /* color: #222; */
+  font-size: 1.5rem;
+  /* letter-spacing: -2px; */
+}
+
+#paletteTable td .palette-inverse{
+  /* color: #eee; */
+  font-size: 1.1rem;
+}
+
+#stackPane {
+  padding: 4px;
+  flex-basis: 240px;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.stack-view {
+  padding: 4px;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#editPane {
+  padding: 4px;
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#canvasView {
+  position: relative;
+  margin: 4px;
+  flex-grow: 2;
+  overflow: auto;
+  background-color: #bbb;
+  border: 1px solid;
+}
+
+#canvasView::-webkit-scrollbar {
+  overflow: hidden;
+  width: 8px;
+  background: #eee;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#canvasView::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+#canvasView::-webkit-scrollbar-button {
+  display: none;
+}
+
+#canvasView::-webkit-scrollbar-piece {
+  background: #eee;
+}
+
+#canvasView::-webkit-scrollbar-piece:start {
+  background: #eee;
+}
+
+#canvasView::-webkit-scrollbar-thumb {
+  overflow: hidden;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: #444;
+}
+
+#canvasView::-webkit-scrollbar-corner {
+  overflow: hidden;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: #444;
+}
+
+#canvasTable {
+  position: absolute;
+  border-collapse: collapse;
+}
+
+#canvasTable td {
+  border: 1px solid #bbb;
+  cursor: pointer;
+}
+
+/* #canvasTable td:hover {
+  animation: blink-border 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes blink-border {
+  100% {
+    background-color: turquoise;
+  }
+} */
+
+#ioPane {
+  flex-grow: 1;
+  display: flex;
+}
+
+.io-view {
+  position: relative;
+  margin: 4px;
+  flex: 1 1 0;
+}
+
+.text-area {
+  display: block;
+  padding: 4px;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: solid 1px #aaa;
+  cursor: auto;
+  font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+  font-size: 1.4rem;
+  user-select: text;
+}
+
+.text-area:read-only {
+  background-color: #f8f8f8;
+}
+
+footer {
+  padding: 2px 0;
+  color: white;
+  cursor: default;
+  background-color: #07c;
+  font-weight: 300;
+}
+
+#leftFooter{
+  float: left;
+  text-align: left;
+}
+
+#rightFooter{
+  text-align: right;
+}
+
+footer span {
+  padding: 0 4px;
+}
+
+dialog {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px;
+  border: solid 1px #aaa;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px #0004;
+}
+
+dialog section{
+  padding: 8px;
+  text-align: center;
+}
+
+dialog p{
+  padding: 8px;
+}
+
+dialog button{
+  padding: 8px;
+}

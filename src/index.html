@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>NoName - Pietron</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div id="content">
+      <div id="toolPane">
+        <div id="paletteView" class="monospace">
+          <table id="paletteTable"></table>
+        </div>
+        <div id="toolView"></div>
+        <div id="debugView"></div>
+      </div>
+      <div id="editPane">
+        <div id="canvasView" tabindex="0">
+          <table id="canvasTable"></table>
+        </div>
+        <div id="ioPane">
+          <div id="inputView" class="io-view">
+            <textarea id="inputArea" class="text-area" placeholder="-- input --"></textarea>
+          </div>
+          <div id="outputView" class="io-view">
+            <textarea id="outputArea" class="text-area" placeholder="-- output --" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div id="stackPane">
+        <div id="lastStackView" class="stack-view">
+          <p>Last</p>
+          <textarea id="lastStackArea" class="text-area" placeholder="--" readonly></textarea>
+        </div>
+        <div id="nowStackView" class="stack-view">
+          <p>Now</p>
+          <textarea id="nowStackArea" class="text-area" placeholder="--" readonly></textarea>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div id="leftFooter" hidden></div>
+      <div id="rightFooter">
+        <span id="widthSpan">Width: 10</span>
+        <span id="heightSpan">Height: 10</span>
+        <span id="diagonalSpan">Diagonal^2: 200</span>
+        <span id="codelSizeSpan">Codel Size: 20</span>
+      </div>
+    </footer>
+  </div>
+  <dialog id="numberInputDialog">
+    <form method="dialog">
+      <section>
+        <p>
+          <label for="numberInput" id="numberInputLabel">msg</label>
+        </p>
+        <p>
+          <input type="number" id="numberInput" min="1" max="1000" value="10">
+        </p>
+      </section>
+      <section>
+        <button id="numberInputCancel" type="reset">Cancel</button>
+        <button type="submit" value="ok">OK</button>
+      </section>
+    </form>
+  </dialog>
+  <dialog id="sizeInputDialog">
+    <form method="dialog">
+      <section>
+        <p>
+          <label for="widthInput">Width: </label>
+          <input type="number" id="widthInput" min="1" max="10000" value="10">
+        </p>
+        <p>
+          <label for="heightInput">Hegiht: </label>
+          <input type="number" id="heightInput" min="1" max="10000" value="10">
+        </p>
+      </section>
+      <section>
+        <button id="sizeInputCancel" type="reset">Cancel</button>
+        <button type="submit" value="ok">OK</button>
+      </section>
+    </form>
+  </dialog>
+  <script src="index.js"></script>
+</body>
+
+</html>
