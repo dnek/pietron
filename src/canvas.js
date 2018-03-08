@@ -65,7 +65,7 @@ const createCanvas = (width, height) => {
 
 const createFromBitmap = bitmap => {
   bitmap = transpose(bitmap);
-  const [width, height] = [bitmap.length, bitmap[0].length];
+  const [height, width] = [bitmap.length, bitmap[0].length];
   setCanvasWidth(width, false);
   setCanvasHeight(height, false);
   for (let i = 0; i < height; i++) {

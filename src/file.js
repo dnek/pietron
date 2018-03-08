@@ -72,8 +72,7 @@ const fileToBitmap = async path => {
   for (let i = 0; i < fieldWidth; i++) {
     const row = [];
     for (let j = 0; j < fieldHeight; j++) {
-      // const hex = img.bitmap.data.readUInt32BE(img.getPixelIndex(i * codelSize, j * codelSize));
-      const hex = img.getPixelColor(i * codelSize, j * codelSize);
+      const hex = img.bitmap.data.readUInt32BE(img.getPixelIndex(i * codelSize, j * codelSize));
       const color = hexToPietColor(hex);
       row.push(color > -1 ? color : 18);
     }
