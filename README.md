@@ -10,7 +10,7 @@ Pietron is a cross-platform IDE for editing and debugging the source code of "Pi
 
 The specification of Piet is [here](http://www.dangermouse.net/esoteric/piet.html).
 
-Pietron is developed with [Electron](https://electronjs.org/) and named after it.
+Pietron is developed with [Electron](https://electronjs.org/) and named after it.
 
 ## Usage
 
@@ -22,19 +22,19 @@ Pietron is developed with [Electron](https://electronjs.org/) and named after i
 
 - Change the color to draw with by clicking on the palette.
 
-  - The commands are shown in each color on the palette.
+  - The commands are shown in each color on the palette.
 
   - The bare one is from * (origin) and the parenthesized one is to *.
 
   - Change the * color by right-cicking on the palette.
 
-- Pick a color by right-clicking on the canvas.
+- Pick a color by right-clicking on the canvas.
 
-- Change the canvas size one by one with CTRL+ALT+[↑↓←→] (⌥⌘ on OSX).
+- Change the canvas size one by one with CTRL+ALT+[↑↓←→] (⌥⌘ on OSX).
 
   - Also specify the exact width and height with CTRL(⌘)+R.
 
-- Undo/Redo support (CTRL(⌘)+Z / CTRL+Y(⇧⌘Z)).
+- Undo/Redo support (CTRL(⌘)+Z / CTRL+Y(⇧⌘Z)).
 
 - Zoom support (CTRL(⌘)+";" / CTRL(⌘)+"-").
 
@@ -52,7 +52,7 @@ Pietron is developed with [Electron](https://electronjs.org/) and named after i
 
 - While debugging, the source codel and the destination codel are indicated by red and blue borders.
 
-- 🎨Emoji🐛 Support.
+- 🎨Emoji🐛 Support.
 
 ### File I/O
 
@@ -74,7 +74,7 @@ Executable files are contained in them.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
 
 ## TODOs
 
