@@ -12,6 +12,10 @@ The specification of Piet is [here](http://www.dangermouse.net/esoteric/piet.htm
 
 Pietron is developed with [Electron](https://electronjs.org/) and named after it.
 
+## ScreenShot
+
+<img src="src/images/pietron_screenshot.png">
+
 ## Usage
 
 ### Editor
