@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "Cross-platform IDE for Piet.",
   "main": "src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dnek/pietron.git"
+  },
   "scripts": {
     "start": "electron src/main.js",
-    "packosx": "electron-packager . Pietron --out=release --overwrite --platform=darwin --icon=src/images/Pietron.icns",
-    "packwin": "electron-packager . Pietron --out=release --overwrite --platform=win32 --icon=src/images/Pietron.ico",
-    "packlinux": "electron-packager . Pietron --out=release --overwrite --platform=linux --icon=src/images/Pietron.png"
+    "packosx": "electron-packager . Pietron --out=release --overwrite --platform=darwin --icon=src/images/Pietron.icns && cd release/Pietron-darwin-x64 && zip -ryXq9 ../Pietron-osx-${npm_package_version}.zip Pietron.app -x *.DS_Store",
+    "packwin": "electron-packager . Pietron --out=release --overwrite --platform=win32 --icon=src/images/Pietron.ico && cd release/Pietron-win32-x64 && zip -ryXq9 ../Pietron-win-${npm_package_version}.zip * -x *.DS_Store",
+    "packlinux": "electron-packager . Pietron --out=release --overwrite --platform=linux --icon=src/images/Pietron.png && cd release/Pietron-linux-x64 && zip -ryXq9 ../Pietron-linux-${npm_package_version}.zip * -x *.DS_Store"
   },
   "keywords": [
     "pietron",
