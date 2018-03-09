@@ -17,6 +17,7 @@ const leftFooter = document.getElementById('leftFooter');
 let debugging = false;
 const setDebugging = f => {
   debugging = f;
+  inputArea.readOnly = f;
   canvas.setDebugging(f);
   footer.style.backgroundColor = f ? '#c70' : '#07c';
   leftFooter.hidden = !f;
@@ -30,10 +31,10 @@ const ipcSendDebug = async debugMode => {
     if (debugMode === 'jump-debug') {
       const count = await nid.showModal('Enter the jump count.', 1000000000);
       if (count > 0) {
-        ipcRenderer.send(debugMode, inputArea.value, count);
+        ipcRenderer.send(debugMode, count);
       }
     } else {
-      ipcRenderer.send(debugMode, inputArea.value);
+      ipcRenderer.send(debugMode);
     }
   }
 };

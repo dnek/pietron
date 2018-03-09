@@ -16,7 +16,8 @@ const WHITE = 18,
   BLACK = 19;
 
 let currentCommandStr = '';
-const DP_STR = ['→(0)', '↓(1)', '←(2)', '↑(4)'], CC_STR = ['L(0)', 'R(1)'];
+const DP_STR = ['→(0)', '↓(1)', '←(2)', '↑(4)'],
+  CC_STR = ['L(0)', 'R(1)'];
 
 let fieldWidth = 1,
   fieldHeight = 1;
@@ -41,7 +42,6 @@ let input = '',
   inputTemp = '',
   output = '';
 let debugging = false,
-  inputRequired = false,
   pausing = true;
 
 let stack = [0],
@@ -63,7 +63,7 @@ const initializeDebug = (colors = [
   input = inputTemp = _input;
   output = '';
   debugging = true;
-  inputRequired = pausing = false;
+  pausing = false;
   stack.length = lastStack.length = 0;
 
   colorBlocks.length = 0;
@@ -119,13 +119,9 @@ const initializeDebug = (colors = [
 };
 
 const advanceDebug = () => {
-  if (inputRequired) {
-    inputRequired = false;
-  } else {
-    lastStack = stack.slice();
-    srcCodel.setValues(...destCodel);
-    stepCount++;
-  }
+  lastStack = stack.slice();
+  srcCodel.setValues(...destCodel);
+  stepCount++;
   const dX = -(dp - 1) % 2,
     dY = -(dp - 2) % 2;
   const onSrcWhite = () => {
@@ -224,8 +220,6 @@ const advanceDebug = () => {
           { //in(n)
             const temp = input.trimLeft().split(/\s+/u);
             if (temp[0] === '') {
-              pausing = true;
-              inputRequired = true;
               break;
             }
             const num = parseInt(temp[0], 10);
@@ -238,8 +232,6 @@ const advanceDebug = () => {
         case 15:
           { //in(c)
             if (input.length === 0) {
-              pausing = true;
-              inputRequired = true;
               break;
             }
             stack.push(input.codePointAt(0));
@@ -264,14 +256,6 @@ const advanceDebug = () => {
     }
   } else {
     onSrcWhite();
-  }
-  if (inputRequired) {
-    dialog.showMessageBox(getWin(), {
-      type: 'warning',
-      title: 'Pietron',
-      message: 'Missing input',
-      detail: 'Please enter something appropriate in the input buffer.'
-    });
   }
 };
 
@@ -382,18 +366,15 @@ ipcMain.on('initialize-debug', (e, _codels, _input, debugMode) => {
   getWin().webContents.send('end-initialize', debugMode);
 });
 
-ipcMain.on('start-debug', (e, _input) => {
-  if (inputRequired) input = _input;
+ipcMain.on('start-debug', () => {
   startDebug();
 });
 
-ipcMain.on('jump-debug', (e, _input, count) => {
-  if (inputRequired) input = _input;
+ipcMain.on('jump-debug', (e, count) => {
   jumpDebug(count);
 });
 
-ipcMain.on('step-debug', (e, _input) => {
-  if (inputRequired) input = _input;
+ipcMain.on('step-debug', () => {
   stepDebug();
 });
 
