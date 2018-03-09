@@ -94,6 +94,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) f
 
 - File drag & drop.
 
+- Set the limits of stack & integer.
+
+- Debug log.
+
 ## Acknowledgments
 
 - [Pidet](https://github.com/dnek/Pidet) is my previous product and I do not recommend using it.
