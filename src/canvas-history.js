@@ -58,7 +58,7 @@ const save = () => {
 
 const isCloseConfirmed = () => {
   if (!dirty) return true;
-  const response = dialog.showMessageBox({
+  const response = dialog.showMessageBoxSync({
     type: 'question',
     buttons: ['Yes', 'No'],
     title: 'Confirm',
