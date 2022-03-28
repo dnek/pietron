@@ -37,17 +37,17 @@ function createWindow() {
   win.on('close', e => {
     if (title.getDirty()) {
       e.preventDefault();
-      dialog.showMessageBox({
+      const response = dialog.showMessageBoxSync({
         type: 'question',
         buttons: ['Yes', 'No'],
         title: 'Confirm',
         message: 'Unsaved data will be lost. Are you sure you want to close current project?'
-      }, response => {
-        if (response === 0) {
-          title.setDirty(false);
-          win.close();
-        }
       });
+
+      if (response === 0) {
+        title.setDirty(false);
+        win.close();
+      }
     }
   });
 }
