@@ -41,9 +41,8 @@ function createWindow() {
   require('./debug');
   const title = require('./title');
 
-  win.on('close', e => {
+  win.on('close', (e) => {
     if (title.getDirty()) {
-      e.preventDefault();
       const response = dialog.showMessageBoxSync({
         type: 'question',
         buttons: ['Yes', 'No'],
@@ -53,7 +52,9 @@ function createWindow() {
 
       if (response === 0) {
         title.setDirty(false);
-        win.close();
+      } else {
+        // cancel closing window
+        e.preventDefault();
       }
     }
   });
