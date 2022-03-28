@@ -6,7 +6,7 @@ const {
 
 const {
   dialog
-} = require('electron').remote;
+} = require('@electron/remote');
 
 const historyAry = [];
 let currentIndex = -1,

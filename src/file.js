@@ -7,7 +7,7 @@ const {
 const {
   BrowserWindow,
   dialog
-} = require('electron').remote;
+} = require('@electron/remote');
 const getWin = () => BrowserWindow.getAllWindows()[0];
 const jimp = require('jimp');
 const path = require('path');

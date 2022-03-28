@@ -11,6 +11,8 @@ let win;
 // const isDarwin = () => process.platform === 'darwin';
 const isDarwin = process.platform === 'darwin';
 
+require('@electron/remote/main').initialize();
+
 function createWindow() {
   win = new BrowserWindow({
     width: 800,
