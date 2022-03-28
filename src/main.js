@@ -11,7 +11,8 @@ let win;
 // const isDarwin = () => process.platform === 'darwin';
 const isDarwin = process.platform === 'darwin';
 
-require('@electron/remote/main').initialize();
+const remoteMain = require('@electron/remote/main');
+remoteMain.initialize();
 
 function createWindow() {
   win = new BrowserWindow({
@@ -26,6 +27,9 @@ function createWindow() {
     },
     icon: __dirname + '/images/Pietron.png'
   });
+
+  remoteMain.enable(win.webContents);
+
   win.loadURL(`file://${__dirname}/index.html`);
   // win.webContents.openDevTools();
   win.on('closed', () => {
