@@ -110,7 +110,7 @@ let template = [
 
 if (isDarwin) {
   template.unshift({
-    label: app.getName(),
+    label: app.name,
     submenu: [
       {role: 'about'},
       {type: 'separator'},
