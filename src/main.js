@@ -17,6 +17,10 @@ function createWindow() {
     height: 600,
     minWidth: 800,
     minHeight: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    },
     icon: __dirname + '/images/Pietron.png'
   });
   win.loadURL(`file://${__dirname}/index.html`);
