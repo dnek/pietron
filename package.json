@@ -29,13 +29,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@electron/remote": "^2.0.8",
     "electron": "^17.2.0",
-    "electron-packager": "^11.1.0",
+    "electron-packager": "^15.4.0",
     "eslint": "^8.12.0",
     "npm": "^8.5.5"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.8",
     "jimp": "^0.16.1"
   }
 }

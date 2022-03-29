@@ -6,12 +6,13 @@ const {
   dialog,
   Menu
 } = require('electron');
+const remoteMain = require('@electron/remote/main');
+
 let win;
 
 // const isDarwin = () => process.platform === 'darwin';
 const isDarwin = process.platform === 'darwin';
 
-const remoteMain = require('@electron/remote/main');
 remoteMain.initialize();
 
 function createWindow() {
