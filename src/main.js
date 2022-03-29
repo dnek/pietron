@@ -6,10 +6,14 @@ const {
   dialog,
   Menu
 } = require('electron');
+const remoteMain = require('@electron/remote/main');
+
 let win;
 
 // const isDarwin = () => process.platform === 'darwin';
 const isDarwin = process.platform === 'darwin';
+
+remoteMain.initialize();
 
 function createWindow() {
   win = new BrowserWindow({
@@ -17,8 +21,16 @@ function createWindow() {
     height: 600,
     minWidth: 800,
     minHeight: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true // to support `remote` in file.js and canvas-history.js
+    },
     icon: __dirname + '/images/Pietron.png'
   });
+
+  remoteMain.enable(win.webContents);
+
   win.loadURL(`file://${__dirname}/index.html`);
   // win.webContents.openDevTools();
   win.on('closed', () => {
@@ -30,20 +42,21 @@ function createWindow() {
   require('./debug');
   const title = require('./title');
 
-  win.on('close', e => {
+  win.on('close', (e) => {
     if (title.getDirty()) {
-      e.preventDefault();
-      dialog.showMessageBox({
+      const response = dialog.showMessageBoxSync({
         type: 'question',
         buttons: ['Yes', 'No'],
         title: 'Confirm',
         message: 'Unsaved data will be lost. Are you sure you want to close current project?'
-      }, response => {
-        if (response === 0) {
-          title.setDirty(false);
-          win.close();
-        }
       });
+
+      if (response === 0) {
+        title.setDirty(false);
+      } else {
+        // cancel closing window
+        e.preventDefault();
+      }
     }
   });
 }

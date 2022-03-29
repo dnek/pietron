@@ -299,7 +299,7 @@ const startDebug = () => {
     advanceDebug();
     loopCount++;
     if (loopCount > 1000000) {
-      const isStopRequired = dialog.showMessageBox(getWin(), {
+      const isStopRequired = dialog.showMessageBoxSync(getWin(), {
         type: 'warning',
         buttons: ['Yes', 'No'],
         title: 'Pietron',
@@ -353,7 +353,7 @@ const refreshWindow = () => {
 const endDebug = () => {
   pausing = true;
   debugging = false;
-  dialog.showMessageBox(getWin(), {
+  dialog.showMessageBoxSync(getWin(), {
     type: 'none',
     title: 'Pietron',
     message: 'Debug finished'

@@ -7,7 +7,7 @@ const {
 const {
   BrowserWindow,
   dialog
-} = require('electron').remote;
+} = require('@electron/remote');
 const getWin = () => BrowserWindow.getAllWindows()[0];
 const jimp = require('jimp');
 const path = require('path');
@@ -39,7 +39,7 @@ const newFile = () => {
 };
 
 const openFile = async () => {
-  const paths = dialog.showOpenDialog(
+  const openDialogResult = await dialog.showOpenDialog(
     getWin(), {
       properties: ['openFile'],
       filters: [{
@@ -48,13 +48,13 @@ const openFile = async () => {
       }]
     }
   );
-  if (paths) {
-    const bitmap = await fileToBitmap(paths[0]);
-    setFilePath(paths[0]);
-    return bitmap;
-  } else {
+  if (openDialogResult.canceled) {
     throw 'cancel';
   }
+
+  const bitmap = await fileToBitmap(openDialogResult.filePaths[0]);
+  setFilePath(openDialogResult.filePaths[0]);
+  return bitmap;
 };
 
 const fileToBitmap = async path => {
@@ -88,7 +88,7 @@ const saveFile = async (bitmap, isAs = false) => {
     if (inputCodelSize > 0) {
       codelSize = inputCodelSize;
     } else throw 'cancel';
-    const openFilePath = dialog.showSaveDialog(
+    const saveFileResult = await dialog.showSaveDialog(
       getWin(), {
         defaultPath: filePath,
         filters: [{
@@ -97,8 +97,8 @@ const saveFile = async (bitmap, isAs = false) => {
         }]
       }
     );
-    if (!openFilePath) throw 'cancel';
-    setFilePath(openFilePath);
+    if (saveFileResult.canceled) throw 'cancel';
+    setFilePath(saveFileResult.filePath);
   }
   const [width, height] = [bitmap.length, bitmap[0].length];
   new jimp(width * codelSize, height * codelSize, (err, img) => {
