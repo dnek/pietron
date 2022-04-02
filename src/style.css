@@ -161,6 +161,11 @@ body {
   cursor: pointer;
 }
 
+#canvasTable.debugging td {
+  border: 1px solid #bbb;
+  cursor: not-allowed;
+}
+
 /* #canvasTable td:hover {
   animation: blink-border 0.5s ease-in-out infinite alternate;
 }
