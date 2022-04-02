@@ -89,6 +89,18 @@ const setFromHistory = bitmap => {
   }
 };
 
+const fullyResetAndSetFromBitmap = bitmap => {
+  // In other functions, DOMs are recycled.
+  // Hence, to fully refresh the scene, it is necessary to completely kill all the cells.
+  for (let i = 0; i < canvasHeight; i++) {
+    canvasTable.deleteRow(-1);
+    canvasCells.pop();
+    canvasColors.pop();
+  }
+  canvasHeight = 0;
+  setFromHistory(bitmap);
+};
+
 const setCodelSize = size => {
   if (size < 5) return;
   for (let i = 0; i < canvasHeight; i++) {
@@ -143,6 +155,15 @@ const setCanvasHeight = (height, addHistoryRequired = true) => {
   heightSpan.innerHTML = `Height: ${canvasHeight}`;
   setDiagonalSpan();
   if (addHistoryRequired) canvasHistory.addHistory(canvasColors);
+};
+
+const extendOneRowUpwards = (addHistoryRequired = true) => {
+  setCanvasHeight(canvasHeight + 1, false);
+  const white_row = canvasColors.pop();
+  canvasColors.unshift(white_row);
+  const cloned = canvasColors.map(a => [...a]);
+  fullyResetAndSetFromBitmap(cloned);
+  if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const setCanvasWidth = (width, addHistoryRequired = true) => {
@@ -295,6 +316,7 @@ module.exports = {
   setCanvasWidth: setCanvasWidth,
   getCanvasHeight: () => canvasHeight,
   setCanvasHeight: setCanvasHeight,
+  extendOneRowUpwards: extendOneRowUpwards,
   openChangeCanvasSizeDialog: openChangeCanvasSizeDialog,
   setDebugging: setDebugging,
   setDebugCodels: setDebugCodels,
