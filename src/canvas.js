@@ -159,29 +159,31 @@ const setCanvasHeight = (height, addHistoryRequired = true) => {
 };
 
 const extendOneRowUpwards = (addHistoryRequired = true) => {
-  setCanvasHeight(canvasHeight + 1, false);
-  const white_row = canvasColors.pop();
-  canvasColors.unshift(white_row);
   const cloned = canvasColors.map(a => [...a]);
+  cloned.unshift(cloned[0].map(() => 18));
   fullyResetAndSetFromBitmap(cloned);
   if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const extendOneColumnToTheLeft = (addHistoryRequired = true) => {
-  setCanvasWidth(canvasWidth + 1, false);
-  const cloned = canvasColors.map(row => {
-    row.unshift(row.pop());
-    return row;
-  });
+  const cloned = canvasColors.map(row => [18, ...row]);
   fullyResetAndSetFromBitmap(cloned);
   if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const trimTopRow = (addHistoryRequired = true) => {
+  if (canvasHeight === 1) return;
 	const cloned = canvasColors.map(a => [...a]);
 	cloned.shift();
 	fullyResetAndSetFromBitmap(cloned);
 	if (addHistoryRequired) canvasHistory.addHistory(cloned);
+};
+
+const trimTheLeftmostColumn = (addHistoryRequired = true) => {
+  if (canvasWidth === 1) return;
+  const cloned = canvasColors.map(row => (row.shift(), row));
+  fullyResetAndSetFromBitmap(cloned);
+  if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const setCanvasWidth = (width, addHistoryRequired = true) => {
@@ -336,6 +338,7 @@ module.exports = {
   setCanvasHeight: setCanvasHeight,
   extendOneRowUpwards: extendOneRowUpwards,
   trimTopRow,
+  trimTheLeftmostColumn,
   extendOneColumnToTheLeft,
   openChangeCanvasSizeDialog: openChangeCanvasSizeDialog,
   setDebugging: setDebugging,
