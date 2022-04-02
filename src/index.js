@@ -114,26 +114,38 @@ window.onload = () => {
     const isCtrlOrCmd = e => isDarwin ? e.metaKey : e.ctrlKey;
     switch (e.key) {
       case 'ArrowLeft':
-        if (isCtrlOrCmd(e) && e.altKey) {
+        if (isCtrlOrCmd(e) && e.altKey && !e.shiftKey) {
           canvas.setCanvasWidth(canvas.getCanvasWidth() - 1);
+          e.preventDefault();
+        } else if (isCtrlOrCmd(e) && e.shiftKey && !e.altKey) {
+          canvas.trimTheLeftmostColumn();
           e.preventDefault();
         }
         break;
       case 'ArrowRight':
-        if (isCtrlOrCmd(e) && e.altKey) {
+        if (isCtrlOrCmd(e) && e.altKey && !e.shiftKey) {
           canvas.setCanvasWidth(canvas.getCanvasWidth() + 1);
+          e.preventDefault();
+        } else if (isCtrlOrCmd(e) && e.shiftKey && !e.altKey) {
+          canvas.extendOneColumnToTheLeft();
           e.preventDefault();
         }
         break;
       case 'ArrowUp':
-        if (isCtrlOrCmd(e) && e.altKey) {
+        if (isCtrlOrCmd(e) && e.altKey && !e.shiftKey) {
           canvas.setCanvasHeight(canvas.getCanvasHeight() - 1);
+          e.preventDefault();
+        } else if (isCtrlOrCmd(e) && e.shiftKey && !e.altKey) {
+          canvas.trimTopRow();
           e.preventDefault();
         }
         break;
       case 'ArrowDown':
-        if (isCtrlOrCmd(e) && e.altKey) {
+        if (isCtrlOrCmd(e) && e.altKey && !e.shiftKey) {
           canvas.setCanvasHeight(canvas.getCanvasHeight() + 1);
+          e.preventDefault();
+        } else if (isCtrlOrCmd(e) && e.shiftKey && !e.altKey) {
+          canvas.extendOneRowUpwards();
           e.preventDefault();
         }
         break;
