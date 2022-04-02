@@ -91,7 +91,8 @@ const setFromHistory = bitmap => {
 
 const fullyResetAndSetFromBitmap = bitmap => {
   // In other functions, DOMs are recycled.
-  // Hence, to fully refresh the scene, it is necessary to completely kill all the cells.
+  // It is also assumed that the contents of canvasTable, canvasCells and canvasColors are all consistent.
+  // Hence, to fully refresh the scene, it is necessary to completely kill all the existing cells.
   for (let i = 0; i < canvasHeight; i++) {
     canvasTable.deleteRow(-1);
     canvasCells.pop();
@@ -164,6 +165,13 @@ const extendOneRowUpwards = (addHistoryRequired = true) => {
   const cloned = canvasColors.map(a => [...a]);
   fullyResetAndSetFromBitmap(cloned);
   if (addHistoryRequired) canvasHistory.addHistory(cloned);
+};
+
+const trimTopRow = (addHistoryRequired = true) => {
+	const cloned = canvasColors.map(a => [...a]);
+	cloned.shift();
+	fullyResetAndSetFromBitmap(cloned);
+	if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const setCanvasWidth = (width, addHistoryRequired = true) => {
@@ -317,6 +325,7 @@ module.exports = {
   getCanvasHeight: () => canvasHeight,
   setCanvasHeight: setCanvasHeight,
   extendOneRowUpwards: extendOneRowUpwards,
+  trimTopRow,
   openChangeCanvasSizeDialog: openChangeCanvasSizeDialog,
   setDebugging: setDebugging,
   setDebugCodels: setDebugCodels,
