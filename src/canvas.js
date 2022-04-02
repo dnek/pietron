@@ -159,6 +159,7 @@ const setCanvasHeight = (height, addHistoryRequired = true) => {
 };
 
 const extendOneRowUpwards = (addHistoryRequired = true) => {
+  if (debugging) return;
   const cloned = canvasColors.map(a => [...a]);
   cloned.unshift(cloned[0].map(() => 18));
   fullyResetAndSetFromBitmap(cloned);
@@ -166,20 +167,23 @@ const extendOneRowUpwards = (addHistoryRequired = true) => {
 };
 
 const extendOneColumnToTheLeft = (addHistoryRequired = true) => {
+  if (debugging) return;
   const cloned = canvasColors.map(row => [18, ...row]);
   fullyResetAndSetFromBitmap(cloned);
   if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const trimTopRow = (addHistoryRequired = true) => {
+  if (debugging) return;
   if (canvasHeight === 1) return;
-	const cloned = canvasColors.map(a => [...a]);
-	cloned.shift();
-	fullyResetAndSetFromBitmap(cloned);
-	if (addHistoryRequired) canvasHistory.addHistory(cloned);
+  const cloned = canvasColors.map(a => [...a]);
+  cloned.shift();
+  fullyResetAndSetFromBitmap(cloned);
+  if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const trimTheLeftmostColumn = (addHistoryRequired = true) => {
+  if (debugging) return;
   if (canvasWidth === 1) return;
   const cloned = canvasColors.map(row => (row.shift(), row));
   fullyResetAndSetFromBitmap(cloned);
@@ -288,7 +292,7 @@ const setDebugCodels = (_srcCodel, _destCodel) => {
 
 const newFile = async () => {
   if (debugging) return;
-  if(!canvasHistory.isCloseConfirmed())return;
+  if (!canvasHistory.isCloseConfirmed()) return;
   const size = await sid.showModal(canvasWidth, canvasHeight);
   if (size === null) return;
   setCanvasWidth(size.x, false);
@@ -304,7 +308,7 @@ const newFile = async () => {
 
 const openFile = async () => {
   if (debugging) return;
-  if(!canvasHistory.isCloseConfirmed())return;
+  if (!canvasHistory.isCloseConfirmed()) return;
   try {
     const bitmap = await file.openFile();
     if (bitmap) createFromBitmap(bitmap);
