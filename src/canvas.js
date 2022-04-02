@@ -89,6 +89,19 @@ const setFromHistory = bitmap => {
   }
 };
 
+const fullyResetAndSetFromBitmap = bitmap => {
+  // In other functions, DOMs are recycled.
+  // It is also assumed that the contents of canvasTable, canvasCells and canvasColors are all consistent.
+  // Hence, to fully refresh the scene, it is necessary to completely kill all the existing cells.
+  for (let i = 0; i < canvasHeight; i++) {
+    canvasTable.deleteRow(-1);
+    canvasCells.pop();
+    canvasColors.pop();
+  }
+  canvasHeight = 0;
+  setFromHistory(bitmap);
+};
+
 const setCodelSize = size => {
   if (size < 5) return;
   for (let i = 0; i < canvasHeight; i++) {
@@ -143,6 +156,34 @@ const setCanvasHeight = (height, addHistoryRequired = true) => {
   heightSpan.innerHTML = `Height: ${canvasHeight}`;
   setDiagonalSpan();
   if (addHistoryRequired) canvasHistory.addHistory(canvasColors);
+};
+
+const extendOneRowUpwards = (addHistoryRequired = true) => {
+  const cloned = canvasColors.map(a => [...a]);
+  cloned.unshift(cloned[0].map(() => 18));
+  fullyResetAndSetFromBitmap(cloned);
+  if (addHistoryRequired) canvasHistory.addHistory(cloned);
+};
+
+const extendOneColumnToTheLeft = (addHistoryRequired = true) => {
+  const cloned = canvasColors.map(row => [18, ...row]);
+  fullyResetAndSetFromBitmap(cloned);
+  if (addHistoryRequired) canvasHistory.addHistory(cloned);
+};
+
+const trimTopRow = (addHistoryRequired = true) => {
+  if (canvasHeight === 1) return;
+	const cloned = canvasColors.map(a => [...a]);
+	cloned.shift();
+	fullyResetAndSetFromBitmap(cloned);
+	if (addHistoryRequired) canvasHistory.addHistory(cloned);
+};
+
+const trimTheLeftmostColumn = (addHistoryRequired = true) => {
+  if (canvasWidth === 1) return;
+  const cloned = canvasColors.map(row => (row.shift(), row));
+  fullyResetAndSetFromBitmap(cloned);
+  if (addHistoryRequired) canvasHistory.addHistory(cloned);
 };
 
 const setCanvasWidth = (width, addHistoryRequired = true) => {
@@ -295,6 +336,10 @@ module.exports = {
   setCanvasWidth: setCanvasWidth,
   getCanvasHeight: () => canvasHeight,
   setCanvasHeight: setCanvasHeight,
+  extendOneRowUpwards: extendOneRowUpwards,
+  trimTopRow,
+  trimTheLeftmostColumn,
+  extendOneColumnToTheLeft,
   openChangeCanvasSizeDialog: openChangeCanvasSizeDialog,
   setDebugging: setDebugging,
   setDebugCodels: setDebugCodels,
