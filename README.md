@@ -34,13 +34,31 @@ Pietron is developed with [Electron](https://electronjs.org/) and named after it
 
 - Pick a color by right-clicking on the canvas.
 
-- Change the canvas size one by one with CTRL+ALT+[↑↓←→] (⌥⌘ on OSX).
+- Change the canvas size in various ways.
 
-  - Also specify the exact width and height with CTRL(⌘)+R.
+  - Change the canvas size one by one with the top-left position fixed with Ctrl + Alt + [↑↓←→] (⌥⌘ on OSX).
 
-- Undo/Redo support (CTRL(⌘)+Z / CTRL+Y(⇧⌘Z)).
+    | meaning | keyboard shortcut |
+    |-----------|---------------------|
+    | extend to the right | Ctrl + Alt + → |
+    | extend downwards |  Ctrl + Alt + ↓ |
+    | trim the rightmost column | Ctrl + Alt + ← |
+    | trim the bottom row | Ctrl + Alt + ↑ |
 
-- Zoom support (CTRL(⌘)+";" / CTRL(⌘)+"-").
+  - Change the canvas size one by one with the bottom-right position fixed with Ctrl + Shift + [↑↓←→] (⇧⌘ on OSX).
+
+    | meaning | keyboard shortcut |
+    |-----------|---------------------|
+    | shift the image to the right | Ctrl + Shift + → |
+    | shift the image down |  Ctrl + Shift + ↓ |
+    | trim the leftmost column | Ctrl + Shift + ← |
+    | trim the top row | Ctrl + Shift + ↑ |
+
+  - Change the canvas size to the specified width and height with Ctrl(⌘) + R.
+
+- Undo/Redo support (Ctrl(⌘) + Z / Ctrl + Y (⇧⌘Z)).
+
+- Zoom support (Ctrl(⌘) + ";" / Ctrl(⌘) + "-").
 
 ### Debugger
 
