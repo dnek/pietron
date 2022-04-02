@@ -21,6 +21,11 @@ const setDebugging = f => {
   canvas.setDebugging(f);
   footer.style.backgroundColor = f ? '#c70' : '#07c';
   leftFooter.hidden = !f;
+  if (f) {
+    document.getElementById('canvasTable').classList.add('debugging');
+  } else {
+    document.getElementById('canvasTable').classList.remove('debugging');
+  }
 };
 
 const ipcSendDebug = async debugMode => {
