@@ -1,6 +1,6 @@
 {
   "name": "pietron",
-  "version": "1.1",
+  "version": "1.1.1",
   "description": "Cross-platform IDE for Piet.",
   "main": "src/main.js",
   "repository": {
@@ -11,7 +11,8 @@
     "start": "electron src/main.js",
     "packosx": "electron-packager . Pietron --out=release --overwrite --platform=darwin --icon=src/images/Pietron.icns && cd release/Pietron-darwin-x64 && zip -ryXq9 ../Pietron-osx-${npm_package_version}.zip Pietron.app -x *.DS_Store",
     "packwin": "electron-packager . Pietron --out=release --overwrite --platform=win32 --icon=src/images/Pietron.ico && cd release/Pietron-win32-x64 && zip -ryXq9 ../Pietron-win-${npm_package_version}.zip * -x *.DS_Store",
-    "packlinux": "electron-packager . Pietron --out=release --overwrite --platform=linux --icon=src/images/Pietron.png && cd release/Pietron-linux-x64 && zip -ryXq9 ../Pietron-linux-${npm_package_version}.zip * -x *.DS_Store"
+    "packlinux": "electron-packager . Pietron --out=release --overwrite --platform=linux --icon=src/images/Pietron.png && cd release/Pietron-linux-x64 && zip -ryXq9 ../Pietron-linux-${npm_package_version}.zip * -x *.DS_Store",
+    "packall": "npm run packosx && npm run packwin && npm run packlinux"
   },
   "keywords": [
     "pietron",
@@ -30,7 +31,7 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^17.2.0",
-    "electron-packager": "^15.4.0",
+    "electron-packager": "^16.0.0",
     "eslint": "^8.12.0",
     "npm": "^8.11.0"
   },
