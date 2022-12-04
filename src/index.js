@@ -85,6 +85,12 @@ ipcRenderer.on('menu-clicked', (e, arg) => {
     case 'Stop Debug':
       if (debugging) ipcRenderer.send('stop-debug');
       break;
+    case 'Match System':
+      //TODO
+      break
+    case 'Toggle Dark Mode':
+      //TODO
+      break
     default:
       break;
   }
