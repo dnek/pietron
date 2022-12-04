@@ -14,18 +14,30 @@ html {
 :root, :root.light {
   --color-main-bg: #eee;
   --color-main-fg: #000;
+  --color-text-area: #fff;
+  --color-text-area-r: #f8f8f8;
+  --color-text: #000;
+  --color-canvas-bg: #bbb;
 }
 
 /* keep this dark root and 'root.dark' below in sync */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-main-bg: #222222;
+    --color-main-bg: #121212;
     --color-main-fg: #fff;
+    --color-text-area: #222222;
+    --color-text-area-r: #222222;
+    --color-text: #fff;
+    --color-canvas-bg: #1e1e1e;
   }
 }
 :root.dark {
   --color-main-bg: #222222;
   --color-main-fg: #fff;
+  --color-text-area: #121212;
+  --color-text-area-r: #121212;
+  --color-text: #fff;
+  --color-canvas-bg: #292A2D;
 }
 
 body {
@@ -127,7 +139,7 @@ body {
   margin: 4px;
   flex-grow: 2;
   overflow: auto;
-  background-color: #bbb;
+  background-color: var(--color-canvas-bg, #bbb);
   border: 1px solid;
 }
 
@@ -211,15 +223,17 @@ body {
   width: 100%;
   height: 100%;
   resize: none;
-  border: solid 1px #aaa;
+  /* border: solid 1px #aaa; */
   cursor: auto;
   font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
   font-size: 1.4rem;
   user-select: text;
+  background-color: var(--color-text-area, #fff);
+  color: var(--color-text, #000);
 }
 
 .text-area:read-only {
-  background-color: #f8f8f8;
+  background-color: var(--color-text-area-r, #f8f8f8);
 }
 
 footer {
