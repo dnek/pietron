@@ -11,7 +11,7 @@ html {
   font-size: 62.5%;
 }
 
-:root, :root.light {
+:root {
   --color-main-bg: #eee;
   --color-text-area: #fff;
   --color-text-area-r: #f8f8f8;
@@ -20,7 +20,6 @@ html {
   --color-dialog-bg: #fff;
 }
 
-/* ! keep this 'root' and 'root.dark' below in sync */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-main-bg: #121212;
@@ -30,14 +29,6 @@ html {
     --color-canvas-bg: #1e1e1e;
     --color-dialog-bg: #333333;
   }
-}
-:root.dark {
-    --color-main-bg: #121212;
-    --color-text-area: #222222;
-    --color-text-area-r: #222222;
-    --color-text: #fff;
-    --color-canvas-bg: #1e1e1e;
-    --color-dialog-bg: #333333;
 }
 
 body {
@@ -92,10 +83,9 @@ body {
   padding: 2px;
   min-width: 68px;
   height: 68px;
-  border: 1px solid gray;
-  color: #000;
+  color: #fff;
   text-align: center;
-  text-shadow: 0 0 10px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: 0 0 10px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   /* -webkit-text-stroke: 1px #000; */
   /* font-size: 1.05rem; */
   font-weight: 600;
