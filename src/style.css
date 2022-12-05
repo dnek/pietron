@@ -20,7 +20,7 @@ html {
   --color-dialog-bg: #fff;
 }
 
-/* keep this dark root and 'root.dark' below in sync */
+/* ! keep this 'root' and 'root.dark' below in sync */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-main-bg: #121212;
@@ -32,12 +32,12 @@ html {
   }
 }
 :root.dark {
-  --color-main-bg: #222222;
-  --color-text-area: #121212;
-  --color-text-area-r: #121212;
-  --color-text: #fff;
-  --color-canvas-bg: #292A2D;
-  --color-dialog-bg: #333333;
+    --color-main-bg: #121212;
+    --color-text-area: #222222;
+    --color-text-area-r: #222222;
+    --color-text: #fff;
+    --color-canvas-bg: #1e1e1e;
+    --color-dialog-bg: #333333;
 }
 
 body {
