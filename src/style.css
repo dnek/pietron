@@ -13,31 +13,31 @@ html {
 
 :root, :root.light {
   --color-main-bg: #eee;
-  --color-main-fg: #000;
   --color-text-area: #fff;
   --color-text-area-r: #f8f8f8;
   --color-text: #000;
   --color-canvas-bg: #bbb;
+  --color-dialog-bg: #fff;
 }
 
 /* keep this dark root and 'root.dark' below in sync */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-main-bg: #121212;
-    --color-main-fg: #fff;
     --color-text-area: #222222;
     --color-text-area-r: #222222;
     --color-text: #fff;
     --color-canvas-bg: #1e1e1e;
+    --color-dialog-bg: #333333;
   }
 }
 :root.dark {
   --color-main-bg: #222222;
-  --color-main-fg: #fff;
   --color-text-area: #121212;
   --color-text-area-r: #121212;
   --color-text: #fff;
   --color-canvas-bg: #292A2D;
+  --color-dialog-bg: #333333;
 }
 
 body {
@@ -69,7 +69,7 @@ body {
   flex-grow: 1;
   display: flex;
   background-color: var(--color-main-bg, #eee);
-  color: var(--color-main-fg, #000);
+  color: var(--color-text, #000);
 }
 
 #toolPane {
@@ -266,6 +266,8 @@ dialog {
   border: solid 1px #aaa;
   border-radius: 6px;
   box-shadow: 0 4px 8px #0004;
+  background-color: var(--color-dialog-bg, #fff);
+  color: var(--color-text, #000);
 }
 
 dialog section{
@@ -279,4 +281,11 @@ dialog p{
 
 dialog button{
   padding: 8px;
+  background-color: var(--color-dialog-bg, #fff);
+  color: var(--color-text, #000);
+}
+
+input[type="number"]{
+  background-color: var(--color-text-area, #fff);
+  color: var(--color-text, #000);
 }
