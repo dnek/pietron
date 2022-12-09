@@ -227,7 +227,7 @@ const advanceDebug = () => {
               // No num, either empty or char not a digit, thus ignore cmd
               break;
             }
-            stack.push(num);
+            stack.push(num[0]);
             break;
           }
         case 15:
