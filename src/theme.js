@@ -11,7 +11,7 @@ const toggleDarkMode = () => {
   } else {
     nativeTheme.themeSource = 'dark';
   }
-}
+};
 
 ipcMain.on('match-system', () => {
   nativeTheme.themeSource = 'system';

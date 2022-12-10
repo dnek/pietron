@@ -87,10 +87,10 @@ ipcRenderer.on('menu-clicked', (e, arg) => {
       break;
     case 'Match System':
       ipcRenderer.send('match-system');
-      break
+      break;
     case 'Toggle Dark Mode':
       ipcRenderer.send('toggle-dark-mode');
-      break
+      break;
     default:
       break;
   }
