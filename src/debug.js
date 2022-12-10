@@ -218,15 +218,16 @@ const advanceDebug = () => {
           }
         case 14:
           { //in(n)
-            const temp = input.trimLeft().split(/\s+/u);
-            if (temp[0] === '') {
+            // Match num at start of string, capture leading whitespace and sign
+            const num = input.match(/^\s*[+-]?\d+/u);
+            // If a number was found, remove it from the input string
+            if (num) {
+              input = input.slice(num[0].length);
+            } else {
+              // No num, either empty or char not a digit, thus ignore cmd
               break;
             }
-            const num = parseInt(temp[0], 10);
-            if (!isNaN(num)) {
-              stack.push(num);
-              input = input.slice(input.indexOf(temp[0]) + temp[0].length);
-            }
+            stack.push(parseInt(num[0]));
             break;
           }
         case 15:
