@@ -218,8 +218,8 @@ const advanceDebug = () => {
           }
         case 14:
           { //in(n)
-            // Match num at start of string, capture trailing whitespace
-            const num = input.match(/^\d+\s*/u);
+            // Match num at start of string, capture leading whitespace and sign
+            const num = input.match(/^\s*[+-]?\d+/u);
             // If a number was found, remove it from the input string
             if (num) {
               input = input.slice(num[0].length);
