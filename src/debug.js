@@ -218,8 +218,8 @@ const advanceDebug = () => {
           }
         case 14:
           { //in(n)
-            // Match first num in string (only if at first index)
-            const num = input.match(/^\d+/u);
+            // Match num at start of string, capture trailing whitespace
+            const num = input.match(/^\d+\s*/u);
             // If a number was found, remove it from the input string
             if (num) {
               input = input.slice(num[0].length);
@@ -227,7 +227,7 @@ const advanceDebug = () => {
               // No num, either empty or char not a digit, thus ignore cmd
               break;
             }
-            stack.push(num[0]);
+            stack.push(parseInt(num[0]));
             break;
           }
         case 15:
