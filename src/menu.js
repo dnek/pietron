@@ -105,6 +105,18 @@ let template = [
       accelerator: 'ESC',
       click: () => menuClicked('Stop Debug')
     }]
+  },
+  {
+    label: 'Theme',
+    submenu: [{
+      label: 'Match System',
+      type: 'radio',
+      click: () => menuClicked('Match System')
+    }, {
+      label: 'Toggle Dark Mode',
+      type: 'radio',
+      click: () => menuClicked('Toggle Dark Mode')
+    }]
   }
 ];
 

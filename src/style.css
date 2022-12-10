@@ -11,6 +11,26 @@ html {
   font-size: 62.5%;
 }
 
+:root {
+  --color-main-bg: #eee;
+  --color-text-area: #fff;
+  --color-text-area-r: #f8f8f8;
+  --color-text: #000;
+  --color-canvas-bg: #bbb;
+  --color-dialog-bg: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-main-bg: #121212;
+    --color-text-area: #222222;
+    --color-text-area-r: #222222;
+    --color-text: #fff;
+    --color-canvas-bg: #1e1e1e;
+    --color-dialog-bg: #333333;
+  }
+}
+
 body {
   width: 100%;
   height: 100%;
@@ -39,7 +59,8 @@ body {
   min-height: 1px;
   flex-grow: 1;
   display: flex;
-  background-color: #eee;
+  background-color: var(--color-main-bg, #eee);
+  color: var(--color-text, #000);
 }
 
 #toolPane {
@@ -62,10 +83,9 @@ body {
   padding: 2px;
   min-width: 68px;
   height: 68px;
-  border: 1px solid gray;
-  color: #000;
+  color: #fff;
   text-align: center;
-  text-shadow: 0 0 10px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: 0 0 10px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   /* -webkit-text-stroke: 1px #000; */
   /* font-size: 1.05rem; */
   font-weight: 600;
@@ -109,7 +129,7 @@ body {
   margin: 4px;
   flex-grow: 2;
   overflow: auto;
-  background-color: #bbb;
+  background-color: var(--color-canvas-bg, #bbb);
   border: 1px solid;
 }
 
@@ -193,15 +213,17 @@ body {
   width: 100%;
   height: 100%;
   resize: none;
-  border: solid 1px #aaa;
+  /* border: solid 1px #aaa; */
   cursor: auto;
   font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
   font-size: 1.4rem;
   user-select: text;
+  background-color: var(--color-text-area, #fff);
+  color: var(--color-text, #000);
 }
 
 .text-area:read-only {
-  background-color: #f8f8f8;
+  background-color: var(--color-text-area-r, #f8f8f8);
 }
 
 footer {
@@ -234,6 +256,8 @@ dialog {
   border: solid 1px #aaa;
   border-radius: 6px;
   box-shadow: 0 4px 8px #0004;
+  background-color: var(--color-dialog-bg, #fff);
+  color: var(--color-text, #000);
 }
 
 dialog section{
@@ -247,4 +271,11 @@ dialog p{
 
 dialog button{
   padding: 8px;
+  background-color: var(--color-dialog-bg, #fff);
+  color: var(--color-text, #000);
+}
+
+input[type="number"]{
+  background-color: var(--color-text-area, #fff);
+  color: var(--color-text, #000);
 }

@@ -40,6 +40,7 @@ function createWindow() {
   const menu = require('./menu');
   Menu.setApplicationMenu(menu);
   require('./debug');
+  require('./theme');
   const title = require('./title');
 
   win.on('close', (e) => {
