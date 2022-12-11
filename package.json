@@ -1,6 +1,6 @@
 {
   "name": "pietron",
-  "version": "1.1.1",
+  "version": "1.2",
   "description": "Cross-platform IDE for Piet.",
   "main": "src/main.js",
   "repository": {
