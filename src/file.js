@@ -13,7 +13,7 @@ const { Jimp } = require('jimp');
 const path = require('path');
 const nid = require('./number-input-dialog');
 
-const ALLOWED_EXTENSIONS = ['png', 'bmp', 'gif'];
+const ALLOWED_EXTENSIONS = ['png', 'bmp'];
 const ALLOWED_MIMES = ALLOWED_EXTENSIONS.map((extension) => `image/${extension}`);
 
 const MAX_CODEL_SIZE = 1000;
