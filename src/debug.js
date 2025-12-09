@@ -125,7 +125,7 @@ const advanceDebug = () => {
   const dX = -(dp - 1) % 2,
     dY = -(dp - 2) % 2;
   const onSrcWhite = () => {
-    for (;;) {
+    for (; ;) {
       destCodel.x += dX;
       destCodel.y += dY;
       if (isOutOfField(destCodel) || cb(destCodel).color === BLACK) {
@@ -248,6 +248,7 @@ const advanceDebug = () => {
         case 17:
           { //out(c)
             if (lessThan(1)) break;
+            if (stack[last] < 0 || stack[last] > 0x10FFFF) break;
             output += String.fromCodePoint(stack.pop());
             break;
           }
