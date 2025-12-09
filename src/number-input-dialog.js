@@ -1,36 +1,26 @@
 'use strict';
 
-const nid = document.getElementById('numberInputDialog');
+const dialog = document.getElementById('numberInputDialog');
 const label = document.getElementById('numberInputLabel');
-const ni = document.getElementById('numberInput');
-const cancel = document.getElementById('numberInputCancel');
+const numberInput = document.getElementById('numberInput');
+const cancelButton = document.getElementById('numberInputCancel');
 
 const showModal = (msg, max) => new Promise((resolve) => {
   label.innerHTML = msg;
-  ni.max = max;
-  nid.showModal();
+  numberInput.max = max;
+  dialog.showModal();
+
   const onClose = () => {
-    removeListeners();
-    if(nid.returnValue === 'ok'){
-      resolve(ni.value | 0);
-    }else{
-      resolve(0);
-    }
+    dialog.removeEventListener('close', onClose);
+    const value = dialog.returnValue === 'ok'
+      ? numberInput.value | 0 : 0;
+    resolve(value);
   };
-  const onCancel = () => {
-    removeListeners();
-    resolve(0);
-  };
-  const removeListeners = () => {
-    nid.removeEventListener('close', onClose);
-    nid.removeEventListener('cancel', onCancel);
-  };
-  nid.addEventListener('close', onClose);
-  nid.addEventListener('cancel', onCancel);
+  dialog.addEventListener('close', onClose);
 });
 
-cancel.addEventListener('click',() => {
-  nid.close();
+cancelButton.addEventListener('click', () => {
+  dialog.close('');
 });
 
 module.exports = {
