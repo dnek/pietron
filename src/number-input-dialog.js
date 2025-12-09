@@ -5,7 +5,7 @@ const label = document.getElementById('numberInputLabel');
 const ni = document.getElementById('numberInput');
 const cancel = document.getElementById('numberInputCancel');
 
-const showModal = (msg, max = 1000) => new Promise((resolve) => {
+const showModal = (msg, max) => new Promise((resolve) => {
   label.innerHTML = msg;
   ni.max = max;
   nid.showModal();

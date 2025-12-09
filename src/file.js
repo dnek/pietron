@@ -16,6 +16,8 @@ const nid = require('./number-input-dialog');
 const ALLOWED_EXTENSIONS = ['png', 'bmp', 'gif'];
 const ALLOWED_MIMES = ALLOWED_EXTENSIONS.map((extension) => `image/${extension}`);
 
+const MAX_CODEL_SIZE = 1000;
+
 const PIET_COLORS_HEX = [
   0xffc0c0ff, 0xff0000ff, 0xc00000ff,
   0xffffc0ff, 0xffff00ff, 0xc0c000ff,
@@ -63,7 +65,7 @@ const openFile = async () => {
 const fileToBitmap = async path => {
   const img = await Jimp.read(path);
   if (!ALLOWED_MIMES.includes(img.mime)) throw 'InvalidFileTypeException';
-  const inputCodelSize = await nid.showModal('Specify the codel size.');
+  const inputCodelSize = await nid.showModal('Specify the codel size.', MAX_CODEL_SIZE);
   if (inputCodelSize > 0) {
     codelSize = inputCodelSize;
   } else throw 'cancel';
@@ -86,7 +88,7 @@ const fileToBitmap = async path => {
 
 const saveFile = async (bitmap, isAs = false) => {
   if (isAs || filePath === '') {
-    const inputCodelSize = await nid.showModal('Specify the codel size.');
+    const inputCodelSize = await nid.showModal('Specify the codel size.', MAX_CODEL_SIZE);
     if (inputCodelSize > 0) {
       codelSize = inputCodelSize;
     } else throw 'cancel';
