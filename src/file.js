@@ -9,9 +9,12 @@ const {
   dialog
 } = require('@electron/remote');
 const getWin = () => BrowserWindow.getAllWindows()[0];
-const jimp = require('jimp');
+const { Jimp } = require('jimp');
 const path = require('path');
 const nid = require('./number-input-dialog');
+
+const ALLOWED_EXTENSIONS = ['png', 'bmp'];
+const ALLOWED_MIMES = ALLOWED_EXTENSIONS.map((extension) => `image/${extension}`);
 
 const PIET_COLORS_HEX = [
   0xffc0c0ff, 0xff0000ff, 0xc00000ff,
@@ -41,12 +44,12 @@ const newFile = () => {
 const openFile = async () => {
   const openDialogResult = await dialog.showOpenDialog(
     getWin(), {
-      properties: ['openFile'],
-      filters: [{
-        name: 'Images',
-        extensions: ['png', 'bmp']
-      }]
-    }
+    properties: ['openFile'],
+    filters: [{
+      name: 'Images',
+      extensions: ALLOWED_EXTENSIONS
+    }]
+  }
   );
   if (openDialogResult.canceled) {
     throw 'cancel';
@@ -58,9 +61,8 @@ const openFile = async () => {
 };
 
 const fileToBitmap = async path => {
-  const img = await jimp.read(path);
-  const mime = img.getMIME();
-  if (mime !== 'image/png' && mime !== 'image/bmp') throw 'InvalidFileTypeException';
+  const img = await Jimp.read(path);
+  if (!ALLOWED_MIMES.includes(img.mime)) throw 'InvalidFileTypeException';
   const inputCodelSize = await nid.showModal('Specify the codel size.');
   if (inputCodelSize > 0) {
     codelSize = inputCodelSize;
@@ -90,29 +92,28 @@ const saveFile = async (bitmap, isAs = false) => {
     } else throw 'cancel';
     const saveFileResult = await dialog.showSaveDialog(
       getWin(), {
-        defaultPath: filePath,
-        filters: [{
-          name: 'Images',
-          extensions: ['png', 'bmp']
-        }]
-      }
+      defaultPath: filePath,
+      filters: [{
+        name: 'Images',
+        extensions: ALLOWED_EXTENSIONS
+      }]
+    }
     );
     if (saveFileResult.canceled) throw 'cancel';
     setFilePath(saveFileResult.filePath);
   }
   const [width, height] = [bitmap.length, bitmap[0].length];
-  new jimp(width * codelSize, height * codelSize, (err, img) => {
-    for (let i = 0; i < width; i++) {
-      for (let j = 0; j < height; j++) {
-        const [startX, startY] = [i * codelSize, j * codelSize];
-        const hex = PIET_COLORS_HEX[bitmap[i][j]];
-        img.scan(startX, startY, codelSize, codelSize, (x, y, offset) => {
-          img.bitmap.data.writeUInt32BE(hex, offset, true);
-        });
-      }
+  const img = new Jimp({ width: width * codelSize, height: height * codelSize });
+  for (let i = 0; i < width; i++) {
+    for (let j = 0; j < height; j++) {
+      const [startX, startY] = [i * codelSize, j * codelSize];
+      const hex = PIET_COLORS_HEX[bitmap[i][j]];
+      img.scan(startX, startY, codelSize, codelSize, (x, y, offset) => {
+        img.bitmap.data.writeUInt32BE(hex, offset, true);
+      });
     }
-    img.write(filePath);
-  });
+  }
+  img.write(filePath);
 };
 
 module.exports = {
