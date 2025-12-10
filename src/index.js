@@ -121,6 +121,7 @@ ipcRenderer.on('end-debug', (e, input, output) => {
 window.onload = () => {
   Split(['#canvasView', '#ioPane'], {
     direction: 'vertical',
+    sizes: [60, 40],
     minSize: 40,
     gutterSize: 8,
     snapOffset: 0

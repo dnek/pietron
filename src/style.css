@@ -127,7 +127,6 @@ body {
 #canvasView {
   position: relative;
   margin: 4px;
-  flex-grow: 2;
   overflow: auto;
   background-color: var(--color-canvas-bg, #bbb);
   border: 1px solid;
@@ -197,7 +196,6 @@ body {
 } */
 
 #ioPane {
-  flex-grow: 1;
   display: flex;
 }
 
