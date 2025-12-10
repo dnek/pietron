@@ -115,7 +115,6 @@ ipcRenderer.on('end-debug', (e, input, output) => {
   setDebugging(false);
   inputArea.value = input;
   outputArea.value = output;
-  lastStackArea.value = nowStackArea.value = '';
 });
 
 window.onload = () => {

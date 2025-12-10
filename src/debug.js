@@ -431,6 +431,7 @@ const endDebug = () => {
     title: 'Pietron',
     message: 'Debug finished'
   });
+  refreshWindow();
   getWin().webContents.send('end-debug', inputTemp, output);
 };
 
