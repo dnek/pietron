@@ -1,6 +1,7 @@
 #directories
 node_modules
 release
+dist
 
 #OSX
 .DS_Store
