@@ -3,6 +3,7 @@
 const {
   ipcRenderer
 } = require('electron');
+const Split = require('split.js');
 
 const canvas = require('./canvas');
 const nid = require('./number-input-dialog');
@@ -114,10 +115,17 @@ ipcRenderer.on('end-debug', (e, input, output) => {
   setDebugging(false);
   inputArea.value = input;
   outputArea.value = output;
-  lastStackArea.value = nowStackArea.value = '';
 });
 
 window.onload = () => {
+  Split(['#canvasView', '#ioPane'], {
+    direction: 'vertical',
+    sizes: [60, 40],
+    minSize: 40,
+    gutterSize: 8,
+    snapOffset: 0
+  });
+
   canvas.createCanvas(10, 10);
   window.addEventListener('keydown', e => {
     // const isDarwin = () => process.platform === 'darwin';

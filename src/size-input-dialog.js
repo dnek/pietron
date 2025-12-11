@@ -2,37 +2,28 @@
 
 const Point = require('./point');
 
-const sid = document.getElementById('sizeInputDialog');
-const wi = document.getElementById('widthInput');
-const hi = document.getElementById('heightInput');
-const cancel = document.getElementById('sizeInputCancel');
+const dialog = document.getElementById('sizeInputDialog');
+const widthInput = document.getElementById('widthInput');
+const hightInput = document.getElementById('heightInput');
+const cancelButton = document.getElementById('sizeInputCancel');
 
 const showModal = (width = 10, height = 10) => new Promise((resolve) => {
-  wi.value = width;
-  hi.value = height;
-  sid.showModal();
+  widthInput.value = width;
+  hightInput.value = height;
+  dialog.showModal();
+
   const onClose = () => {
-    removeListeners();
-    if(sid.returnValue === 'ok'){
-      resolve(new Point(wi.value | 0, hi.value | 0));
-    }else{
-      resolve(null);
-    }
+    dialog.removeEventListener('close', onClose);
+    const value = dialog.returnValue === 'ok'
+      ? new Point(widthInput.value | 0, hightInput.value | 0)
+      : null;
+    resolve(value);
   };
-  const onCancel = () => {
-    removeListeners();
-    resolve(null);
-  };
-  const removeListeners = () => {
-    sid.removeEventListener('close', onClose);
-    sid.removeEventListener('cancel', onCancel);
-  };
-  sid.addEventListener('close', onClose);
-  sid.addEventListener('cancel', onCancel);
+  dialog.addEventListener('close', onClose);
 });
 
-cancel.addEventListener('click',() => {
-  sid.close();
+cancelButton.addEventListener('click', () => {
+  dialog.close('');
 });
 
 module.exports = {

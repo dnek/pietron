@@ -1,6 +1,6 @@
 {
   "name": "pietron",
-  "version": "1.2",
+  "version": "2.0.0",
   "description": "Cross-platform IDE for Piet.",
   "main": "src/main.js",
   "repository": {
@@ -9,15 +9,70 @@
   },
   "scripts": {
     "start": "electron src/main.js",
-    "packosx": "electron-packager . Pietron --out=release --overwrite --platform=darwin --icon=src/images/Pietron.icns && cd release/Pietron-darwin-x64 && zip -ryXq9 ../Pietron-osx-${npm_package_version}.zip Pietron.app -x *.DS_Store",
-    "packwin": "electron-packager . Pietron --out=release --overwrite --platform=win32 --icon=src/images/Pietron.ico && cd release/Pietron-win32-x64 && zip -ryXq9 ../Pietron-win-${npm_package_version}.zip * -x *.DS_Store",
-    "packlinux": "electron-packager . Pietron --out=release --overwrite --platform=linux --icon=src/images/Pietron.png && cd release/Pietron-linux-x64 && zip -ryXq9 ../Pietron-linux-${npm_package_version}.zip * -x *.DS_Store",
-    "packall": "npm run packosx && npm run packwin && npm run packlinux"
+    "postinstall": "electron-builder install-app-deps",
+    "build:mac": "electron-builder --mac --x64 --arm64",
+    "build:win": "electron-builder --win --x64 --arm64",
+    "build:linux": "electron-builder --linux --x64 --arm64",
+    "build:all": "electron-builder -mwl --x64 --arm64"
+  },
+  "build": {
+    "appId": "net.dnek.pietron",
+    "productName": "Pietron",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "files": [
+      "package.json",
+      "src/**/*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "darkModeSupport": true,
+      "icon": "src/images/Pietron.icns"
+    },
+    "afterSign": "scripts/notarize.js",
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "src/images/Pietron.ico"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "src/images/Pietron.png"
+    }
   },
   "keywords": [
     "pietron",
     "electron",
     "piet",
+    "esolang",
     "editor",
     "debugger",
     "interpreter",
@@ -30,13 +85,16 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "^22.0.0",
-    "electron-packager": "^17.1.1",
-    "eslint": "^8.29.0",
-    "npm": "^9.2.0"
+    "@electron/notarize": "^3.1.1",
+    "electron": "^39.2.6",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9.39.1",
+    "npm": "^11.6.4"
   },
   "dependencies": {
-    "@electron/remote": "^2.0.9",
-    "jimp": "^0.16.2"
+    "@electron/remote": "^2.1.3",
+    "jimp": "^1.6.0",
+    "long": "^5.3.2",
+    "split.js": "^1.6.5"
   }
 }

@@ -8,6 +8,30 @@ const {
 
 const getWin = () => BrowserWindow.getAllWindows()[0];
 
+const Long = require('long');
+
+/**
+ * 
+ * @param {Long} a 
+ * @param {Long} b 
+ * @returns {Long}
+ */
+const flooredDiv = (a, b) => {
+  const d = a.div(b);
+  if (d.mul(b).eq(a) || a.isNegative() === b.isNegative()) return d;
+  return d.sub(1);
+};
+/**
+ * 
+ * @param {Long} a 
+ * @param {Long | number} b 
+ * @returns {Long}
+ */
+const flooredMod = (a, b) => {
+  return a.mod(b).add(b).mod(b);
+};
+
+
 const pietCommands = require('./piet-commands');
 const Point = require('./point');
 const ColorBlock = require('./color-block');
@@ -24,10 +48,6 @@ let fieldWidth = 1,
 const isOutOfField = (p = new Point) =>
   p.x < 0 || p.x > fieldWidth - 1 || p.y < 0 || p.y > fieldHeight - 1;
 
-let breakPoints = [
-  [false]
-]; //bool[,]
-
 let dp = 0,
   cc = 0,
   waitCount = 0,
@@ -36,7 +56,10 @@ let dp = 0,
 
 let srcCodel = new Point,
   destCodel = new Point;
-let slides = [new Point]; //point[]
+/**
+ * @type {Point}
+ */
+let slides = [];
 
 let input = '',
   inputTemp = '',
@@ -44,11 +67,21 @@ let input = '',
 let debugging = false,
   pausing = true;
 
-let stack = [0],
-  lastStack = [0]; //int[]
-let colorBlocks = [
-  [new ColorBlock]
-];
+/**
+ * @type {Long[]}
+ */
+const stack = [];
+const isStackLessThan = (x) => stack.length < x;
+
+/**
+ * @type {Long[]}
+ */
+let lastStack = [];
+/**
+ * @type {ColorBlock[][]}
+ */
+
+let colorBlocks = [[]];
 const cb = (point = new Point) => colorBlocks[point.x][point.y];
 
 const initializeDebug = (colors = [
@@ -125,7 +158,7 @@ const advanceDebug = () => {
   const dX = -(dp - 1) % 2,
     dY = -(dp - 2) % 2;
   const onSrcWhite = () => {
-    for (;;) {
+    for (; ;) {
       destCodel.x += dX;
       destCodel.y += dY;
       if (isOutOfField(destCodel) || cb(destCodel).color === BLACK) {
@@ -152,82 +185,116 @@ const advanceDebug = () => {
       return;
     } else if (cb(destCodel).color !== WHITE) {
       waitCount = 0;
-      const destColor = cb(destCodel).color,
-        srcColor = cb(srcCodel).color,
-        last = stack.length - 1;
+      const destColor = cb(destCodel).color;
+      const srcColor = cb(srcCodel).color;
       const command = (destColor % 3 - srcColor % 3 + 3) % 3 + ((destColor / 3 | 0) - (srcColor / 3 | 0) + 6) % 6 * 3;
       currentCommandStr = pietCommands.ARY[command];
-      const lessThan = x => stack.length < x;
       switch (command) {
         case 1: //push
-          stack.push(cb(srcCodel).length);
+          stack.push(Long.fromInt(cb(srcCodel).length));
           break;
         case 2: //pop
-          if (lessThan(1)) break;
+          if (isStackLessThan(1)) break;
           stack.pop();
           break;
         case 3: //add
-          if (lessThan(2)) break;
-          stack[last - 1] += stack.pop();
-          break;
+          {
+            if (isStackLessThan(2)) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            stack.push(pop1.add(pop0));
+            break;
+          }
         case 4: //sub
-          if (lessThan(2)) break;
-          stack[last - 1] -= stack.pop();
-          break;
+          {
+            if (isStackLessThan(2)) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            stack.push(pop1.sub(pop0));
+            break;
+          }
         case 5: //multi
-          if (lessThan(2)) break;
-          stack[last - 1] *= stack.pop();
-          break;
+          {
+            if (isStackLessThan(2)) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            stack.push(pop1.mul(pop0));
+            break;
+          }
         case 6: //div
-          if (lessThan(2) || stack[last] === 0) break;
-          stack[last - 1] = stack[last - 1] / stack.pop() | 0;
-          break;
+          {
+            if (isStackLessThan(2) || stack[stack.length - 1].isZero()) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            stack.push(flooredDiv(pop1, pop0));
+            break;
+          }
         case 7: //mod
-          if (lessThan(2) || stack[last] === 0) break;
-          stack[last - 1] %= stack[last];
-          if (stack[last] * stack[last - 1] < 0) stack[last - 1] += stack[last]; //the same sign as the divisor
-          stack.pop();
-          break;
+          {
+            if (isStackLessThan(2) || stack[stack.length - 1].isZero()) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            stack.push(flooredMod(pop1, pop0));
+            break;
+          }
         case 8: //not
-          if (lessThan(1)) break;
-          stack[last] = stack[last] === 0 ? 1 : 0;
-          break;
+          {
+            if (isStackLessThan(1)) break;
+            const pop0 = stack.pop();
+            stack.push(pop0.isZero() ? Long.ONE : Long.ZERO);
+            break;
+          }
         case 9: //great
-          if (lessThan(2)) break;
-          stack[last - 1] = stack[last - 1] > stack.pop() ? 1 : 0;
-          break;
+          {
+            if (isStackLessThan(2)) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            stack.push(pop1.gt(pop0) ? Long.ONE : Long.ZERO);
+            break;
+          }
         case 10: //point
-          if (lessThan(1)) break;
-          dp = ((dp + stack.pop()) % 4 + 4) % 4;
-          break;
+          {
+            if (isStackLessThan(1)) break;
+            const pop0 = stack.pop();
+            dp = flooredMod(pop0.add(dp), 4).toInt();
+            break;
+          }
         case 11: //switch
-          if (lessThan(1)) break;
-          if (stack.pop() % 2 !== 0) cc = 1 - cc;
-          break;
+          {
+            if (isStackLessThan(1)) break;
+            const pop0 = stack.pop();
+            if (pop0.mod(2).isZero()) break;
+            cc ^= 1;
+            break;
+          }
         case 12: //dup
-          if (lessThan(1)) break;
-          stack.push(stack[last]);
+          if (isStackLessThan(1)) break;
+          stack.push(stack[stack.length - 1]);
           break;
         case 13:
           { //roll
-            if (lessThan(2) || stack[last - 1] < 1 || lessThan(stack[last - 1] + 2)) break;
-            const c = stack.pop(),
-              d = stack.pop(); //count, depth
-            stack.push(...stack.splice(last - d - 1, d - (c % d + d) % d));
+            const poppedLength = stack.length - 2;
+            if (isStackLessThan(2) || stack[poppedLength].lt(0) || stack[poppedLength].gt(poppedLength)) break;
+            const pop0 = stack.pop();
+            const pop1 = stack.pop();
+            // Avoid div0 error on flooredMod
+            if (pop1.isZero()) break;
+            const rollCount = flooredMod(pop0, pop1).toInt();
+            const depth = pop1.toInt();
+            stack.push(...stack.splice(-depth, depth - rollCount));
             break;
           }
         case 14:
           { //in(n)
             // Match num at start of string, capture leading whitespace and sign
-            const num = input.match(/^\s*[+-]?\d+/u);
-            // If a number was found, remove it from the input string
-            if (num) {
-              input = input.slice(num[0].length);
-            } else {
+            const numMatchArray = input.match(/^\s*[+-]?\d+/u);
+            if (!numMatchArray) {
               // No num, either empty or char not a digit, thus ignore cmd
               break;
             }
-            stack.push(parseInt(num[0]));
+            // If a number was found, remove it from the input string
+            input = input.slice(numMatchArray[0].length);
+            stack.push(Long.fromString(numMatchArray[0].trim()));
             break;
           }
         case 15:
@@ -235,20 +302,21 @@ const advanceDebug = () => {
             if (input.length === 0) {
               break;
             }
-            stack.push(input.codePointAt(0));
+            stack.push(Long.fromInt(input.codePointAt(0)));
             input = Array.of(...input).slice(1).join('');
             break;
           }
         case 16:
           { //out(n)
-            if (lessThan(1)) break;
+            if (isStackLessThan(1)) break;
             output += stack.pop().toString();
             break;
           }
         case 17:
           { //out(c)
-            if (lessThan(1)) break;
-            output += String.fromCodePoint(stack.pop());
+            if (isStackLessThan(1)) break;
+            if (stack[stack.length - 1].lt(0) || stack[stack.length - 1].gt(0x10FFFF)) break;
+            output += String.fromCodePoint(stack.pop().toInt());
             break;
           }
       }
@@ -337,18 +405,22 @@ const stepDebug = () => {
   }
 };
 
+/**
+ * 
+ * @param {Long} value
+ * @returns {string}
+ */
+const getStackValuePreviewStr = (value) => {
+  if (value.lt(0) || value.gt(0x10FFFF)) return `${value}`;
+  if (value.lt(32)) return `${value}(^${String.fromCharCode(value.toInt() + 64)})`;
+  return `${value}(${String.fromCodePoint(value.toInt())})`;
+};
+
 const refreshWindow = () => {
-  const sanitizedChar = i => {
-    try {
-      return i > 31 ? String.fromCodePoint(i) : '??';
-    } catch (error) {
-      return '??';
-    }
-  };
-  const lastStackStr = lastStack.map(i => `${i}(${sanitizedChar(i)})`),
-    stackStr = stack.map(i => `${i}(${sanitizedChar(i)})`);
+  const lastStackStrs = lastStack.map(getStackValuePreviewStr);
+  const stackStrs = stack.map(getStackValuePreviewStr);
   let debugStatus = `<span>Command: <em>${currentCommandStr}</em></span><span>DP: ${DP_STR[dp]}</span><span>CC: ${CC_STR[cc]}</span><span>Step: ${stepCount}</span>`;
-  getWin().webContents.send('refresh-window', srcCodel, destCodel, input, output, lastStackStr, stackStr, debugStatus);
+  getWin().webContents.send('refresh-window', srcCodel, destCodel, input, output, lastStackStrs, stackStrs, debugStatus);
 };
 
 const endDebug = () => {
@@ -359,6 +431,7 @@ const endDebug = () => {
     title: 'Pietron',
     message: 'Debug finished'
   });
+  refreshWindow();
   getWin().webContents.send('end-debug', inputTemp, output);
 };
 
