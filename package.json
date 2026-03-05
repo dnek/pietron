@@ -87,7 +87,7 @@
   "devDependencies": {
     "@electron/notarize": "^3.1.1",
     "electron": "^39.2.6",
-    "electron-builder": "^26.0.12",
+    "electron-builder": "^26.8.1",
     "eslint": "^9.39.1",
     "npm": "^11.6.4"
   },
