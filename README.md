@@ -110,7 +110,7 @@ I will describe below how Pietron implements them to the best of my knowledge.
 - Maximum stack size
   - The stack is implemented as a JavaScript array, and its maximum length depends on the environment. When it overflows, a [RangeError](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Invalid_array_length) will occur.
 
-- Maximum interger size
+- Maximum integer size
   - Integers are implemented as signed 64-bit integers using [long.js](https://github.com/dcodeIO/long.js). Integer overflow should be handled by wrap around, and commands are not ignored.
 
 - `divide` command
